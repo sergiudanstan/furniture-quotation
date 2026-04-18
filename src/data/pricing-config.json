@@ -1,0 +1,63 @@
+{
+  "currency": "EUR",
+  "laborRatePerHour": 45.00,
+  "overheadMultiplier": 1.15,
+  "wasteFactor": 1.08,
+  "profitMarginPercent": 25,
+  "minimumPrice": 180,
+  "materials": {
+    "oak": {
+      "displayName": "European Oak",
+      "pricePerCm3": 0.012,
+      "densityKgPerCm3": 0.00067,
+      "finishes": {
+        "natural": { "displayName": "Natural Oil", "pricePerM2": 8.50 },
+        "lacquer": { "displayName": "Clear Lacquer", "pricePerM2": 12.00 },
+        "stain-dark": { "displayName": "Dark Stain + Lacquer", "pricePerM2": 18.00 }
+      }
+    },
+    "walnut": {
+      "displayName": "American Walnut",
+      "pricePerCm3": 0.022,
+      "densityKgPerCm3": 0.00055,
+      "finishes": {
+        "natural": { "displayName": "Natural Oil", "pricePerM2": 8.50 },
+        "lacquer": { "displayName": "Clear Lacquer", "pricePerM2": 12.00 },
+        "stain-dark": { "displayName": "Dark Stain + Lacquer", "pricePerM2": 18.00 }
+      }
+    },
+    "beech": {
+      "displayName": "European Beech",
+      "pricePerCm3": 0.008,
+      "densityKgPerCm3": 0.00072,
+      "finishes": {
+        "natural": { "displayName": "Natural Oil", "pricePerM2": 8.50 },
+        "whitewash": { "displayName": "Whitewash", "pricePerM2": 15.00 },
+        "lacquer": { "displayName": "Clear Lacquer", "pricePerM2": 12.00 }
+      }
+    },
+    "pine": {
+      "displayName": "Scandinavian Pine",
+      "pricePerCm3": 0.005,
+      "densityKgPerCm3": 0.00052,
+      "finishes": {
+        "natural": { "displayName": "Natural Oil", "pricePerM2": 8.50 },
+        "whitewash": { "displayName": "Whitewash", "pricePerM2": 15.00 },
+        "lacquer": { "displayName": "Clear Lacquer", "pricePerM2": 12.00 }
+      }
+    }
+  },
+  "upholstery": {
+    "none": { "displayName": "No Upholstery", "pricePerM2": 0 },
+    "fabric": { "displayName": "Standard Fabric", "pricePerM2": 45.00 },
+    "leather": { "displayName": "Full Grain Leather", "pricePerM2": 120.00 }
+  },
+  "labor": {
+    "baseMinutes": 120,
+    "perArmrest": 30,
+    "perBackSlat": 10,
+    "complexityPerDegreeOfTilt": 2,
+    "perLegInsetComplexity": 0.5,
+    "perRadiusComplexity": 1.0
+  }
+}

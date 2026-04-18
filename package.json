@@ -1,0 +1,30 @@
+{
+  "name": "chair-quotation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "vite",
+    "tsc": "tsc",
+    "build": "tsc && vite build",
+    "format": "prettier ./src ./index.html -w"
+  },
+  "devDependencies": {
+    "@types/three": "0.173",
+    "typescript": "5.7",
+    "vite": "^6.2.5"
+  },
+  "dependencies": {
+    "@jscadui/3mf-export": "0.5.0",
+    "fflate": "0.8",
+    "manifold-3d": "3.0",
+    "jspdf": "^2.5",
+    "prettier": "3.5",
+    "three": "0.173",
+    "twrl": "0.0.6"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "*"
+  }
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="Furniture Quotation Tool" />
+    <meta property="og:type" content="website" />
+    <meta
+      name="description"
+      content="Parametric furniture configurator with live pricing and PDF quote export"
+    />
+    <meta
+      property="og:description"
+      content="Parametric furniture configurator with live pricing and PDF quote export"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Furniture Quotation Tool</title>
+  </head>
+  <body>
+    <header>
+      <h1>Furniture Quotation</h1>
+    </header>
+    <main>
+      <section id="generator">
+        <h2 class="hidden">Furniture Quotation</h2>
+        <div id="part">
+          <div id="canvas-container">
+            <canvas aria-label="3D preview of the furniture">
+              3D Preview of the parametric furniture. You might need to
+              enable JavaScript.</canvas
+            >
+          </div>
+          <div id="view-controls">
+            <button id="btn-rotate">Rotate</button>
+            <button id="btn-reset-view">Reset View</button>
+          </div>
+          <div id="validity"></div>
+        </div>
+        <div id="panel">
+          <div id="controls" role="group" aria-label="Furniture parameters"></div>
+          <div id="downloads">
+            <a id="download-3mf">3MF</a>
+            <a id="download-stl">STL</a>
+            <a id="download-obj">OBJ</a>
+          </div>
+        </div>
+        <div id="quote"></div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

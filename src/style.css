@@ -1,0 +1,667 @@
+:root {
+  font-family: system-ui;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  --gutter: 1em;
+  max-width: 600px;
+  margin: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+
+  /* space out items & push footer to the bottom */
+  display: grid;
+  gap: 3em;
+  height: 100%;
+  grid-template-rows: auto 1fr auto;
+}
+
+@media (width > 1200px) {
+  body {
+    max-width: 1400px;
+  }
+}
+
+section#generator {
+  display: grid;
+  gap: 4em;
+}
+
+@media (width > 1200px) {
+  section#generator {
+    grid-template-columns: 1fr 1fr 320px;
+  }
+}
+
+canvas {
+  /* Overflow allowed outside of the container */
+  --overflow: 15%;
+  position: absolute;
+  left: calc(-1 * var(--overflow));
+  top: calc(-1 * var(--overflow));
+  width: calc(100% + 2 * var(--overflow));
+  height: calc(100% + 2 * var(--overflow));
+}
+
+@media (width < 600px) {
+  #part {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  canvas {
+    /* match body padding */
+    --overflow: 1em;
+  }
+
+  /* reduce gaps on very small screens */
+  section#generator {
+    gap: 2em;
+  }
+}
+
+#panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (width > 900px) {
+  #panel {
+    border-radius: 1px;
+    outline-offset: -2px;
+  }
+}
+
+header {
+  font-family: "Kanit";
+  font-size: 2em;
+}
+
+header h1 {
+  /* shift to the left to work around gap and align with header */
+  margin-left: calc(-1 * 1em / 32);
+}
+
+#canvas-container {
+  height: 30em;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (width < 600px) {
+  #canvas-container {
+    height: 20em;
+  }
+}
+
+/* mostly used for a11y-only elements like headings */
+.hidden {
+  display: none;
+}
+
+/* Product selector */
+.product-selector {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.product-btn {
+  flex: 1;
+  padding: 0.75em 1em;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: none;
+  border: 2px solid black;
+  cursor: pointer;
+  color: black;
+}
+
+.product-btn:hover {
+  background-color: #333;
+  color: white;
+}
+
+.product-btn.active {
+  background-color: black;
+  color: white;
+}
+
+/* Section headers in controls */
+.section-header {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin: 0;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #ddd;
+}
+
+.section-header + .range-input-wrapper {
+  padding-top: 1em;
+}
+
+.range-input-wrapper + .section-header {
+  margin-top: 2em;
+}
+
+/* Validity warning */
+#validity {
+  display: none;
+  text-align: center;
+  color: #c00;
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 0.5em;
+}
+
+/* Symmetric checkbox */
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding-top: 1em;
+}
+
+.checkbox-wrapper label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 1.2em;
+  height: 1.2em;
+  cursor: pointer;
+}
+
+/* CONTROLS */
+
+/* range */
+.range-input-wrapper {
+  display: flex;
+  gap: 1em;
+}
+
+.range-input-wrapper + .range-input-wrapper {
+  padding-top: 2em;
+}
+
+.range-input-wrapper label {
+  min-width: 5em;
+}
+
+.range-input-wrapper input[type="number"]::selection {
+  background-color: #dddddd;
+}
+
+.range-input-wrapper input[type="range"] {
+  margin: 0;
+}
+
+/* ADAPTED FROM https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
+
+/* Reset */
+
+.range-input-wrapper input[type="range"] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+.range-input-wrapper input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+.range-input-wrapper input[type="range"]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Styling (thumb) */
+
+.range-input-wrapper {
+  --thumb-height: 1em;
+  --thumb-fill: white;
+  --thumb-stroke: black;
+  --thumb-stroke-width: 0.2em;
+}
+
+/* For clumsy devices (phones, tables, in general anything without a mouse) make the thumbs
+ * a bit bigger */
+@media (hover: none) {
+  .range-input-wrapper {
+    --thumb-height: 2em;
+  }
+}
+
+.range-input-wrapper input[type="range"]::-webkit-slider-thumb {
+  outline: var(--thumb-stroke-width) solid var(--thumb-stroke);
+  aspect-ratio: 1;
+  height: var(--thumb-height);
+  border-radius: 50%;
+  background-color: var(--thumb-fill);
+  cursor: pointer;
+
+  /*  needs to be specified in chrome (space between the top of the thumb & the top of the track) */
+  margin-top: calc(-1 * var(--thumb-height) / 2);
+}
+
+.range-input-wrapper input[type="range"]::-moz-range-thumb {
+  border: var(--thumb-stroke-width) solid var(--thumb-stroke);
+  height: var(--thumb-height);
+  /* aspect-ratio doesn't seem to work on FF */
+  width: var(--thumb-height);
+  border-radius: 50%;
+  background-color: var(--thumb-fill);
+  cursor: pointer;
+}
+
+.range-input-wrapper input[type="range"]::-ms-thumb {
+  border: var(--thumb-stroke-width) solid var(--thumb-stroke);
+  aspect-ratio: 1;
+  height: var(--thumb-height);
+  border-radius: 50%;
+  background-color: var(--thumb-fill);
+  cursor: pointer;
+}
+
+/* Styling (track) */
+
+.range-input-wrapper {
+  --track-height: var(--thumb-stroke-width);
+}
+
+.range-input-wrapper input[type="range"]::-webkit-slider-runnable-track {
+  height: var(--track-height);
+  background: black;
+  border-radius: 5px;
+  border: 0.2px solid #010101;
+}
+
+.range-input-wrapper input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: black;
+}
+
+.range-input-wrapper input[type="range"]::-moz-range-track {
+  height: var(--track-height);
+  cursor: pointer;
+  background: black;
+  border-radius: 5px;
+  border: 0.2px solid #010101;
+}
+
+.range-input-wrapper input[type="range"]::-ms-track {
+  height: var(--track-height);
+  cursor: pointer;
+  border-width: 16px 0;
+}
+.range-input-wrapper input[type="range"]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 5px;
+}
+.range-input-wrapper input[type="range"]:focus::-ms-fill-lower {
+  background: black;
+}
+.range-input-wrapper input[type="range"]::-ms-fill-upper {
+  background: black;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+}
+.range-input-wrapper input[type="range"]:focus::-ms-fill-upper {
+  background: black;
+}
+
+/* Text (number) input part (actual input + "mm" */
+
+/* Number input reset */
+
+/* Remove arrows */
+
+/* Chrome, Safari, Edge, Opera */
+.range-input-value input::-webkit-outer-spin-button,
+.range-input-value input::-webkit-inner-spin-button,
+.angle-input-value input::-webkit-outer-spin-button,
+.angle-input-value input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.range-input-value input[type="number"],
+.angle-input-value input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.range-input-value input,
+.angle-input-value input {
+  padding: 0;
+  flex-grow: 1;
+  text-align: right;
+  font-size: 1.2em;
+  border: 0;
+  font-weight: bold;
+}
+
+/* Styling */
+.range-input-value,
+.angle-input-value {
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+}
+
+/* "mm" suffix for range inputs */
+.range-input-value::after {
+  content: "mm";
+}
+
+/* degree suffix for angle inputs */
+.angle-input-value::after {
+  content: "\00B0";
+}
+
+/* Stepper */
+/* XXX mostly copied and adapted from "range" above */
+
+/* Remove arrows */
+
+/* Chrome, Safari, Edge, Opera */
+.stepper-input-value input::-webkit-outer-spin-button,
+.stepper-input-value input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.stepper-input-value input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.stepper-input-value input {
+  padding: 0;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.2em;
+  border: 0;
+  font-weight: bold;
+}
+
+.stepper-input-wrapper + .range-input-wrapper {
+  padding-top: 2em;
+}
+
+.stepper-input-wrapper {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.stepper-input-wrapper label {
+  min-width: 3em;
+}
+
+.stepper-input-wrapper button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  /* iOS Safari user agent makes button text blue, so override and inherit parent's color */
+  color: inherit;
+}
+
+.stepper-input-wrapper button:disabled {
+  color: darkgrey;
+}
+
+.stepper-input-wrapper button:hover:not(:disabled) > svg {
+  transform: scale(1.2);
+}
+
+.stepper-input-wrapper svg {
+  stroke-width: 0.15em;
+  height: 1.4em;
+}
+
+.stepper-input-wrapper button:active svg {
+  stroke-width: 0.2em;
+}
+
+/* Download */
+#downloads {
+  margin-top: 2em;
+  display: flex;
+  gap: 0.5em;
+}
+
+#downloads a {
+  --fore: white;
+  --back: black;
+  --outline: transparent;
+
+  flex: 1;
+  display: block;
+  text-align: center;
+  padding: 1em;
+  text-transform: uppercase;
+  color: var(--fore);
+  background-color: var(--back);
+  font-size: 1.2em;
+  font-weight: bold;
+  outline: 2px solid var(--outline);
+}
+
+#downloads a:hover {
+  --fore: black;
+  --back: white;
+  --outline: black;
+}
+
+#downloads a,
+#downloads a:visited {
+  text-decoration: none;
+}
+
+/* View controls (rotate / reset) */
+#view-controls {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.75em;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+#view-controls button {
+  background: none;
+  border: 2px solid black;
+  cursor: pointer;
+  padding: 0.35em 0.75em;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: black;
+}
+
+#view-controls button:hover {
+  background-color: black;
+  color: white;
+}
+
+#btn-rotate.active {
+  background-color: black;
+  color: white;
+}
+
+/* Preset buttons */
+.presets-wrapper {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.preset-btn {
+  flex: 1;
+  padding: 0.5em 0.75em;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: none;
+  border: 2px solid black;
+  cursor: pointer;
+  color: black;
+}
+
+.preset-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.presets-wrapper + .section-header {
+  margin-top: 0;
+}
+
+/* Select input (material/finish/upholstery) */
+.select-input-wrapper {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.select-input-wrapper + .select-input-wrapper {
+  padding-top: 1em;
+}
+
+.select-input-wrapper label {
+  min-width: 5em;
+}
+
+.select-input-wrapper select {
+  flex: 1;
+  font-size: 1em;
+  padding: 0.4em 0.6em;
+  border: 2px solid black;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.select-input-wrapper + .section-header {
+  margin-top: 2em;
+}
+
+.range-input-wrapper + .select-input-wrapper {
+  padding-top: 2em;
+}
+
+/* Quote panel */
+.quote-panel {
+  position: sticky;
+  top: 2em;
+}
+
+.quote-heading {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin: 0 0 1em 0;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #ddd;
+}
+
+.quote-details {
+  margin-bottom: 1.5em;
+}
+
+.quote-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25em 0;
+  font-size: 0.9em;
+}
+
+.quote-detail-label {
+  color: #888;
+}
+
+.quote-detail-value {
+  font-weight: bold;
+}
+
+.quote-breakdown {
+  border-top: 1px solid #ddd;
+  padding-top: 1em;
+  margin-bottom: 1em;
+}
+
+.quote-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35em 0;
+  font-size: 0.9em;
+}
+
+.quote-row-label {
+  color: #555;
+}
+
+.quote-row-value {
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.quote-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75em 0;
+  border-top: 2px solid black;
+  margin-bottom: 1.5em;
+}
+
+.quote-total-label {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quote-total-value {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.quote-pdf-btn {
+  width: 100%;
+  padding: 1em;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+.quote-pdf-btn:hover {
+  background-color: white;
+  color: black;
+}
