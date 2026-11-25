@@ -23,7 +23,7 @@
     "@jscadui/3mf-export": "0.5.0",
     "fflate": "0.8",
     "jspdf": "^4.2.1",
-    "manifold-3d": "3.0",
+    "manifold-3d": "3.5",
     "prettier": "3.5",
     "three": "0.173",
     "twrl": "0.0.6"
