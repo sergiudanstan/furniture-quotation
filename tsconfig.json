@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
 
-    "baseUrl": ".", // Required if "paths" is defined
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["./src/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
