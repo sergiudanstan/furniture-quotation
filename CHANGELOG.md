@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-25
+
+### Fixed
+- The release workflow builds the SBOM from `package-lock.json` (`npm sbom --package-lock-only`).
+  It used to run after an install without devDependencies, and `npm sbom` refused the incomplete
+  tree, so the `v0.1.0` tag never produced a release. That tag is kept as it is; this is the first
+  published release.
+
 ## [0.1.0] - 2026-11-25
 
 First tagged release of the chair and table configurator with live pricing and PDF quote
@@ -21,5 +29,6 @@ First tagged release of the chair and table configurator with live pricing and P
 - jsPDF 2.x to 4.2.1 (2.x had a critical `npm audit` advisory); the PDF export is exercised by the smoke test.
 - Lockfile refreshed with `npm audit fix` (see `package-lock.json`); `npm audit` now reports 0 vulnerabilities.
 
-[Unreleased]: https://github.com/sergiudanstan/furniture-quotation/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/sergiudanstan/furniture-quotation/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/sergiudanstan/furniture-quotation/releases/tag/v0.1.1
 [0.1.0]: https://github.com/sergiudanstan/furniture-quotation/releases/tag/v0.1.0
