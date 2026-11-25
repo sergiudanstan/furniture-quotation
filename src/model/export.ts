@@ -87,7 +87,7 @@ export function exportSTL(manifold: Manifold): Blob {
   geometry.computeVertexNormals();
   const tempMesh = new THREE.Mesh(geometry);
   const result = new STLExporter().parse(tempMesh, { binary: true }) as DataView;
-  return new Blob([result.buffer], { type: "model/stl" });
+  return new Blob([result.buffer as ArrayBuffer], { type: "model/stl" });
 }
 
 export function exportOBJ(manifold: Manifold): Blob {
