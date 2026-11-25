@@ -42,8 +42,7 @@ in the browser with jsPDF; nothing is uploaded.
 ## Deployment
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on every push to `main`.
-Known issue: it currently builds with `--base /chair-quotation/` (a leftover from the old repo
-name), so the Pages site loads its assets from the wrong path; open pull request #1 fixes this.
+It builds with `--base /furniture-quotation/`, the path the site is served from.
 `netlify.toml` is only used if the site is also connected to Netlify.
 
 ## Development
