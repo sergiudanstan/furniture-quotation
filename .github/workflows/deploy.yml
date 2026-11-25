@@ -24,7 +24,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run build -- --base /chair-quotation/
+      - run: npm run build -- --base /furniture-quotation/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
