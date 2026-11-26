@@ -44,6 +44,17 @@ try {
   pdf = bytes.subarray(0, 5).toString("latin1");
   if (bytes.length < 5000) problems.push(`PDF quote is suspiciously small (${bytes.length} bytes)`);
 } catch (e) { problems.push(`PDF export failed: ${e.message}`); }
+// The Defaults button restores the slider values: change one, click Defaults, expect the original back.
+const reset = await page.evaluate(() => {
+  const input = document.querySelector("#dynamic-controls input[type=number], #dynamic-controls input:not([type=range])");
+  const before = input.value;
+  input.value = String(Number(before) + 20);
+  input.dispatchEvent(new Event("change", { bubbles: true }));
+  const changed = input.value;
+  document.getElementById("btn-defaults").click();
+  return { before, changed, after: input.value };
+});
+if (reset.changed === reset.before || reset.after !== reset.before) problems.push(`Defaults button did not restore the slider: ${JSON.stringify(reset)}`);
 await browser.close();
 server.close();
 
