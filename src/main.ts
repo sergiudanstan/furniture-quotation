@@ -272,6 +272,24 @@ btnTable.addEventListener("click", () => currentProduct.send("table"));
 productSelector.append(btnChair, btnTable);
 controls.append(productSelector);
 
+// ── Reset to defaults ────────────────────────────────────────────────────
+
+const presetsWrapper = document.createElement("div");
+presetsWrapper.className = "presets-wrapper";
+const btnDefaults = document.createElement("button");
+btnDefaults.className = "preset-btn";
+btnDefaults.id = "btn-defaults";
+btnDefaults.textContent = "Defaults";
+btnDefaults.addEventListener("click", () => {
+  if (currentProduct.latest === "chair") {
+    for (const key of CHAIR_KEYS) chairParams[key].send(CHAIR_DEFAULTS[key]);
+  } else {
+    for (const key of TABLE_KEYS) tableParams[key].send(TABLE_DEFAULTS[key]);
+  }
+});
+presetsWrapper.append(btnDefaults);
+controls.append(presetsWrapper);
+
 // ── Dynamic controls container ───────────────────────────────────────────
 
 const dynamicControls = document.createElement("div");
