@@ -12,6 +12,8 @@ WASM, previewed with three.js and downloadable as 3MF, STL or OBJ.
 
 **Live:** https://sergiudanstan.github.io/furniture-quotation/
 
+**Replaces** (all archived, each with a pointer to this repository): [chair-quotation](https://github.com/sergiudanstan/chair-quotation) 0.1.2, [parametric-chair](https://github.com/sergiudanstan/parametric-chair) 0.1.2, [table-claude](https://github.com/sergiudanstan/table-claude) 0.1.1 and the private CAD-furniture 0.1.1.
+
 ## What it configures
 
 - **Chair**: the ten chair parameters of chair-quotation, with wood, finish and upholstery choices.

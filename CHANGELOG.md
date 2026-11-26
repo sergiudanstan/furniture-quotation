@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-26
+
+### Changed
+- README lists the repositories this configurator replaces (chair-quotation, parametric-chair, table-claude, CAD-furniture), which are now archived.
+
 ## [0.1.1] - 2026-11-25
 
 ### Fixed
@@ -29,6 +34,7 @@ First tagged release of the chair and table configurator with live pricing and P
 - jsPDF 2.x to 4.2.1 (2.x had a critical `npm audit` advisory); the PDF export is exercised by the smoke test.
 - Lockfile refreshed with `npm audit fix` (see `package-lock.json`); `npm audit` now reports 0 vulnerabilities.
 
-[Unreleased]: https://github.com/sergiudanstan/furniture-quotation/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/sergiudanstan/furniture-quotation/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/sergiudanstan/furniture-quotation/releases/tag/v0.1.2
 [0.1.1]: https://github.com/sergiudanstan/furniture-quotation/releases/tag/v0.1.1
 [0.1.0]: https://github.com/sergiudanstan/furniture-quotation/releases/tag/v0.1.0
